@@ -86,7 +86,7 @@ contract TrueID {
         return userIndexes;
     }
 
-    function getUser(address userAddress) public view returns (string, string, string, string, string, string, string) {
+    function getUser(address userAddress) public  restricted view returns (string, string, string, string, string, string, string) {
         if (isNewUser(userAddress)) {
             return ("","","","","","","");
         }

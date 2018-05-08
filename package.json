@@ -7,7 +7,9 @@
     "deploy": "node deploy"
   },
   "author": {
-    "name": "TrueID"
+    "name": "Ashish Prajapati",
+    "email": "ashisherc@gmail.com",
+    "url": "https://ashisherc.com"
   },
   "license": "ISC",
   "dependencies": {
