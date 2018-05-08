@@ -20,6 +20,8 @@ contract TrueID {
 
     struct Provider {
         string name;
+        string contactAddress;
+        string email;
         uint index;
     }
 
@@ -49,31 +51,35 @@ contract TrueID {
         address lastAddress = userIndexes[userIndexes.length - 1];
         userIndexes[indexToDelete] = lastAddress;
         userIndexes.length --;
+        users[lastAddress].index = indexToDelete;
     }
 
-    function editProvider(address providerAddress, string name) public restricted {
+    function editProvider(address providerAddress, string name, string contactAddress, string email) public restricted {
         if(isNewProvider(providerAddress)){
             providers[providerAddress].index = providerIndexes.push(providerAddress) - 1;
         }
         providers[providerAddress].name = name;
+        providers[providerAddress].contactAddress = contactAddress;
+        providers[providerAddress].email = email;
     }
 
     function deleteProvider(address providerAddress) public restricted {
-        uint indexToDelete = users[providerAddress].index;
+        uint indexToDelete = providers[providerAddress].index;
         address lastAddress = providerIndexes[providerIndexes.length - 1];
         providerIndexes[indexToDelete] = lastAddress;
         providerIndexes.length --;
+        providers[lastAddress].index = indexToDelete;
     }
 
     function getProviders() public view returns(address[]) {
         return providerIndexes;
     }
 
-    function getProvider(address providerAddress) public view returns (string) {
+    function getProvider(address providerAddress) public view returns (string, string, string) {
         if (isNewProvider(providerAddress)) {
-            return "";
+            return ("", "", "");
         }
-        return (providers[providerAddress].name);
+        return (providers[providerAddress].name, providers[providerAddress].contactAddress, providers[providerAddress].email);
     }
 
     function getUsers() public view returns(address[]) {
